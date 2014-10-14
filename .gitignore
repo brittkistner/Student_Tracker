@@ -52,3 +52,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+#ADDED TO .gitignore
+
+local_settings.py 
+.idea/
+staticfiles
