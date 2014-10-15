@@ -88,6 +88,7 @@ def to_student(request):
 # check in from request Post
 @login_required()
 def checkin(request):
+    student_check_in_form = None
     if request.user.is_student:
     #Check if student or teacher
         student_check_in_form = StudentCheckInForm(student=request.user)
