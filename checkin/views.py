@@ -57,6 +57,17 @@ def helpme(request):
     return render_to_response('helpMe.html', data)
 
 
+#########
+# CLASS #
+#########
+
+# def klass(request):
+#     return render(request, 'class.html')
+#
+# def klass2(request):
+#     return render(request, 'class2.html')
+
+
 def add_help(request, student_id):
     student_in_need = UserProfile.objects.get(pk=student_id)
     HelpMe.objects.create(student=student_in_need)
