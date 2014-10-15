@@ -1,29 +1,58 @@
-{#{% extends "base.html" %}#}
-{#{% load crispy_forms_tags %}#}
-{##}
-{##}
-{##}
-{##}
-{#<br>#}
-{#<br>#}
-{#<br>#}
-{#<br>#}
-{#<div class="container">#}
-{#    <div class="row register">#}
-{#        <div class="col-sm-5 col-sm-offset-3">#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-
 {% load staticfiles %}
 <head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.leanModal.min.js' %}"></script>
-    {% block extra_head %}{% endblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Ultra|Ewert' rel='stylesheet'>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400italic,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+{#    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>#}
+{#    <script type="text/javascript" src="{% static 'js/jquery.leanModal.min.js' %}"></script>#}
+    {% block extra_head %}{% endblock extra_head%}
 </head>
 
 
 <body>
-    {% block content %}
-    {% endblock %}
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="{%  url 'login' %}">myCLASS</a>
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-left">
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+                    <li><a href="#">ABOUT</a></li>
+
+                {% else %}
+                    <li><a href="{% url 'login' %}">LOGIN</a></li>
+                    <li><a href="{% url 'register' %}">REGISTER</a></li>
+                    <li><a href="#">ABOUT</a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </div>
+      </nav>
+      <div class="container-fluid" id="main_page">
+        <div class="row">
+            <div class="col-sm-12">
+              <div id="wrap" class="container">
+                  {% block content %}{% endblock content %}
+              </div>
+            </div>
+        </div>
+      </div>
 </body>

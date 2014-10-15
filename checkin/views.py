@@ -38,3 +38,11 @@ def home(request):
         'user': request.user,
     }
     return render(request, 'home.html', data)
+
+
+#########
+# CLASS #
+#########
+
+def klass(request):
+    return render(request, 'class.html')
