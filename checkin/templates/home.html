@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/homeHelpMe.js' %}"></script>
+{% endblock script %}
 {% block content %}
 
-    HOME <p>{{ user.first_name }} {{ user.username }}</p>
+    HOME <p>{{ user.first_name }} {{ user.username }} student: {{ user.is_student }}</p>
+    <div class="helpMe"></div>
+
 {% endblock content %}

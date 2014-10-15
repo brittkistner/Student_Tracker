@@ -3,8 +3,11 @@ from django.db import models
 
 
 class UserProfile(AbstractUser):
-    name = models.CharField(max_length=25)
+    # name = models.CharField(max_length=25)
+    # we enter first and last names in the registration, the name field is unnecessary
     is_student = models.BooleanField(default=True)
+    # I think my database might be screwed up because it doesnt let me make changes to the user
+    #in the admin, working around it to avoid dropping the db
 
     def __unicode__(self):
         return self.username
