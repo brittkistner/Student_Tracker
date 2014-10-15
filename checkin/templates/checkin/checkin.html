@@ -1,0 +1,7 @@
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ student_check_in_form.as_p }}
+        <input class="btn btn-default" type="submit" value="CheckIn">
+    </form>
+{% endblock %}
