@@ -23,7 +23,7 @@ def register(request):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             login(request, new_user)
-            return redirect("login")
+            return redirect("home")
 
     else:
         form = EmailUserCreationForm()
@@ -71,12 +71,12 @@ def klass(request):
 def add_help(request, student_id):
     student_in_need = UserProfile.objects.get(pk=student_id)
     HelpMe.objects.create(student=student_in_need)
-    return redirect("home")
+    return redirect("helpme")
 
 def helped(request, help_id):
     help_me = HelpMe.objects.get(pk=help_id)
     help_me.delete()
-    return redirect("home")
+    return redirect("helpme")
 
 
 # we can work on this later, but this is just a url any user can go to that would
@@ -85,13 +85,13 @@ def to_teacher(request):
     teacher = request.user
     teacher.is_student = False
     teacher.save()
-    return redirect("home")
+    return redirect("helpme")
 
 def to_student(request):
     student = request.user
     student.is_student = True
     student.save()
-    return redirect("home")
+    return redirect("helpme")
 
 
 
@@ -118,3 +118,6 @@ def checkin(request):
 
     data = {'student_check_in_form': student_check_in_form}
     return render(request, 'checkin/checkin.html', data)
+
+def klass(request):
+    return render(request, 'class.html')
