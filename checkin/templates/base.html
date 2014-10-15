@@ -1,0 +1,29 @@
+{#{% extends "base.html" %}#}
+{#{% load crispy_forms_tags %}#}
+{##}
+{##}
+{##}
+{##}
+{#<br>#}
+{#<br>#}
+{#<br>#}
+{#<br>#}
+{#<div class="container">#}
+{#    <div class="row register">#}
+{#        <div class="col-sm-5 col-sm-offset-3">#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+
+{% load staticfiles %}
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.leanModal.min.js' %}"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
