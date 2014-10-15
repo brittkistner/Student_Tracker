@@ -17,7 +17,9 @@ urlpatterns = patterns('',
     name='password_reset_confirm'),
     url(r'^home/helpMe/$', 'checkin.views.helpme', name='helpme'),
     url(r'^add_help/(?P<student_id>\w+)/$', 'checkin.views.add_help', name='add_help'),
-    url(r'^helped/(?P<user_id>\w+)/$', 'checkin.views.helped', name='helped'),
+    url(r'^helped/(?P<help_id>\w+)/$', 'checkin.views.helped', name='helped'),
+    url(r'^to_teacher/$', 'checkin.views.to_teacher', name='to_teacher'),
+    url(r'^to_student/$', 'checkin.views.to_student', name='to_student'),
 
 
     url(r'^admin/', include(admin.site.urls)),

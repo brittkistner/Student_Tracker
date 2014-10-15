@@ -3,11 +3,13 @@
     <div class="assistList">
         <ol>
         {% for student_to_be_helped in assist_list %}
-                <li>{{ student_to_be_helped.student }}</li>
+                <li>{{ student_to_be_helped.student }}
+                    {% if user.is_student == False %}
+                        <a href="{% url 'helped' student_to_be_helped.pk %}"><button id="helpedButton" class= "btn btn-primary" type="submit" value="helped">Helped Student</button></a>
+                {% endif %}</li>
+
+
         {% endfor %}
-                {% if user.is_student == False %}
-                <a href="{% url 'helped' student.pk %}"><button id="helpedButton" class= "btn btn-primary" type="submit" value="helped">Helped 1st Student</button></a>
-                {% endif %}
         </ol>
     </div>
     {% if user.is_student %}

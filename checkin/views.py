@@ -46,7 +46,7 @@ def helpme(request):
     assist_list = HelpMe.objects.all()
     data = {
         'user': request.user,
-        'assist_list': assist_list
+        'assist_list': assist_list,
     }
     return render_to_response('helpMe.html', data)
 
@@ -56,7 +56,22 @@ def add_help(request, student_id):
     HelpMe.objects.create(student=student_in_need)
     return redirect("home")
 
-def helped(request, student_id):
-    student_in_need = UserProfile.objects.get(pk=student_id)
-    HelpMe.objects.create(student=student_in_need)
+def helped(request, help_id):
+    help_me = HelpMe.objects.get(pk=help_id)
+    help_me.delete()
+    return redirect("home")
+
+
+# we can work on this later, but this is just a url any user can go to that would
+# change the user's is_student boolean to False (making them a teacher)
+def to_teacher(request):
+    teacher = request.user
+    teacher.is_student = False
+    teacher.save()
+    return redirect("home")
+
+def to_student(request):
+    student = request.user
+    student.is_student = True
+    student.save()
     return redirect("home")
