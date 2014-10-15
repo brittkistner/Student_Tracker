@@ -23,10 +23,10 @@
     </head>
     <body class="loading">
        	<div id="preload">
-{#	       	<img src="img/bcg_slide-1.jpg">#}
-{#	       	<img src="img/bcg_slide-2.jpg">#}
-{#	       	<img src="img/bcg_slide-3.jpg">#}
-{#	       	<img src="img/bcg_slide-4.jpg">#}
+            <img src="{% static 'img/old_classroom.jpg' %}"
+	       	<img src="{% static 'img/raising_hands.jpg' %}">
+	       	<img src="{% static 'img/blur-door.jpg' %}">
+	       	<img src="{% static 'img/library.jpg' %}">
        	</div>
 
        	<main>
@@ -39,9 +39,8 @@
 	        	>
 		        	<div class="hsContainer">
 			    		<div class="hsContent" data-center="bottom: 200px; opacity: 1" data-top="bottom: 1200px; opacity: 0" data-anchor-target="#slide-1 h2">
-{#				    		<h2>Simple parallax scrolling is...</h2>#}
-{#                            HEADER#}
-{#                            STUDENT LIST#}
+				    		<h1>Thanks for checking in (user.name)</h1>
+                            <h2>The class mayor is (user.mayor.name)</h2>
 			    		</div>
 		        	</div>
 	        	</div>
@@ -61,8 +60,8 @@
 			    			data--100-bottom="opacity: 0;"
 			    			data-anchor-target="#slide-2"
 			    		>
-{#				    		<h2>great for story telling websites.</h2>#}
-{#                            HELP ME#}
+                            <h2>STUDENTS IN THE CLASS TODAY</h2>
+
 			    		</div>
 			    	</div>
 				</div>
@@ -83,8 +82,8 @@
 							data-200-top="opacity: 0"
 							data-anchor-target="#slide-3 h2"
 						>
-{#				    		<h2>Now go and create your own story</h2>#}
-{#                            PHOTO#}
+                            <h2>Help Me</h2>
+                            <div class="helpMe" style="border: 2px solid green; height:200px;"></div>
 			    		</div>
 			    	</div>
 
@@ -105,8 +104,7 @@
 							data-top="opacity: 1"
 							data-anchor-target="#slide-4"
 						>
-{#				    		<h2>and share mine.</h2>#}
-{#                            WHAT ABOUT HERE?#}
+				    		<h2>Thanks for visiting</h2>
 			    		</div>
 			    	</div>
 

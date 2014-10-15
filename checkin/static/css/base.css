@@ -1,7 +1,14 @@
-body{
+#main_page{
 min-height: 100%;
 background-image:url('../img/new_classroom.jpg');
 background-position: center;
 background-size: cover;
 width: 100%;
 }
+
+nav{
+    margin-bottom: 0 !important;
+}
+/*#main_page{*/
+    /*margin: 0 auto;*/
+/*}*/

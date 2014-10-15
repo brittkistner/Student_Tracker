@@ -44,5 +44,8 @@ def home(request):
 # CLASS #
 #########
 
-def klass(request):
-    return render(request, 'class.html')
+# def klass(request):
+#     return render(request, 'class.html')
+#
+# def klass2(request):
+#     return render(request, 'class2.html')

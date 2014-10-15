@@ -1,0 +1,31 @@
+#header-container{
+min-height: 100%;
+background-image:url('../img/old_classroom.jpg');
+background-position: center;
+background-size: cover;
+width: 100%;
+}
+
+#student-list-container{
+min-height: 100%;
+background-image:url('../img/old_classroom.jpg');
+background-position: center;
+background-size: cover;
+width: 100%;
+}
+
+#help-me-container{
+min-height: 100%;
+background-image:url('../img/raising_hands.jpg');
+background-position: center;
+background-size: cover;
+width: 100%;
+}
+
+#footer-container{
+min-height: 100%;
+background-image:url('../img/blur-door.jpg');
+background-position: center;
+background-size: cover;
+width: 100%;
+}

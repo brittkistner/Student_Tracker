@@ -82,3 +82,11 @@
 /*background-size: cover;*/
 /*width: 100%;*/
 /*}*/
+
+#log{
+min-height: 100%;
+background-image:url('../img/new_classroom.jpg');
+background-position: center;
+background-size: cover;
+width: 100%;
+}
