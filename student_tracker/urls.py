@@ -18,6 +18,9 @@ urlpatterns = patterns('',
 
 
     url(r'^admin/', include(admin.site.urls)),
+
+    #check in
+    url(r'^checkin/$', 'checkin.views.checkin', name='checkin'),
 )
 
 if settings.DEBUG:
