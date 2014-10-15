@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, render_to_response
-from checkin.forms import EmailUserCreationForm
+from django.contrib.auth.decorators import login_required
+from checkin.forms import EmailUserCreationForm, StudentCheckInForm
+from checkin.models import CheckIn, Class
 
 # ##############
 # REGISTRATION #
@@ -35,9 +37,16 @@ def register(request):
 # HOME #
 ########
 
+@login_required()
 def home(request):
-    return render(request, 'home.html')
-
+    if not request.user.is_student:
+        classes = Class.objects.filter(teacher=request.user)
+    else:
+        classes = Class.objects.filter(student=request.user)
+    data = {
+        'classes': classes
+    }
+    return render(request, 'home.html', data)
 
 def helpme(request):
     assist_list = HelpMe.objects.all()
@@ -72,3 +81,28 @@ def to_student(request):
     student.is_student = True
     student.save()
     return redirect("home")
+
+
+
+# check in the students to class
+# check in from request Post
+@login_required()
+def checkin(request):
+    if request.user.is_student:
+    #Check if student or teacher
+        student_check_in_form = StudentCheckInForm(student=request.user)
+        #Pass in student user to get classes for the particular student in form
+        if request.method == "POST":
+            student_check_in_form = StudentCheckInForm(request.POST)
+            if student_check_in_form.is_valid():
+                checkin = CheckIn.objects.create(
+                    student=request.user,
+                    class_name=Class.objects.get(
+                        pk=int(student_check_in_form.cleaned_data['classes'])
+                    )
+                )
+                if checkin:
+                    return redirect('home')
+
+    data = {'student_check_in_form': student_check_in_form}
+    return render(request, 'checkin/checkin.html', data)
