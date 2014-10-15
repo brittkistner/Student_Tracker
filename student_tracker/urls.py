@@ -15,6 +15,9 @@ urlpatterns = patterns('',
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
     'django.contrib.auth.views.password_reset_confirm',
     name='password_reset_confirm'),
+    url(r'^home/helpMe/$', 'checkin.views.helpme', name='helpme'),
+    url(r'^add_help/(?P<student_id>\w+)/$', 'checkin.views.add_help', name='add_help'),
+    url(r'^helped/(?P<user_id>\w+)/$', 'checkin.views.helped', name='helped'),
 
 
     url(r'^admin/', include(admin.site.urls)),

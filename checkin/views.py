@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from checkin.forms import EmailUserCreationForm
 
 # ##############
 # REGISTRATION #
 ###############
+from checkin.models import UserProfile, HelpMe
+
 
 def register(request):
     if request.method == 'POST':
@@ -38,3 +40,23 @@ def home(request):
         'user': request.user,
     }
     return render(request, 'home.html', data)
+
+
+def helpme(request):
+    assist_list = HelpMe.objects.all()
+    data = {
+        'user': request.user,
+        'assist_list': assist_list
+    }
+    return render_to_response('helpMe.html', data)
+
+
+def add_help(request, student_id):
+    student_in_need = UserProfile.objects.get(pk=student_id)
+    HelpMe.objects.create(student=student_in_need)
+    return redirect("home")
+
+def helped(request, student_id):
+    student_in_need = UserProfile.objects.get(pk=student_id)
+    HelpMe.objects.create(student=student_in_need)
+    return redirect("home")

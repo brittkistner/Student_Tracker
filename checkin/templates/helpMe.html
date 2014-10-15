@@ -1,0 +1,19 @@
+<div class="helpMe">
+    <h2>HelpMe</h2>
+    <div class="assistList">
+        <ol>
+        {% for student_to_be_helped in assist_list %}
+                <li>{{ student_to_be_helped.student }}</li>
+        {% endfor %}
+                {% if user.is_student == False %}
+                <a href="{% url 'helped' student.pk %}"><button id="helpedButton" class= "btn btn-primary" type="submit" value="helped">Helped 1st Student</button></a>
+                {% endif %}
+        </ol>
+    </div>
+    {% if user.is_student %}
+    <div class="addMe">
+        <a href="{% url 'add_help' user.pk %}"><button id="addMeButton" class= "btn btn-primary" type="submit" value="addHelp">Add Me</button></a>
+    </div>
+    {% endif %}
+
+</div>
