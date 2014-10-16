@@ -26,6 +26,10 @@ urlpatterns = patterns('',
     url(r'^to_teacher/$', 'checkin.views.to_teacher', name='to_teacher'),
     url(r'^to_student/$', 'checkin.views.to_student', name='to_student'),
 
+    #AJAX STUDENTS
+    url(r'^class/new_helpMe/$', 'checkin.views.new_helpme', name='new_helpme'),
+    url(r'^add_student/(?P<student_id>\w+)/$', 'checkin.views.add_student', name='add_student'),
+    url(r'^remove_help/(?P<help_id>\w+)/$', 'checkin.views.remove_help', name='remove_help'),
 
     url(r'^admin/', include(admin.site.urls)),
 
