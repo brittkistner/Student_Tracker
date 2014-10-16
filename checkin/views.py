@@ -1,6 +1,7 @@
 import json
 from django.contrib.auth import authenticate, login
 from django.core import serializers
+from django.db.models import Count, Max
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.decorators import login_required
@@ -73,6 +74,29 @@ def add_help(request, student_id):
     return redirect("class")
 
 
+@csrf_exempt
+def ajax_add_help(request, student_id):
+    data = json.loads(request.body)
+    if data:
+        student_in_need = UserProfile.objects.get(pk=student_id)
+    HelpMe.objects.create(student=student_in_need)
+    return redirect("class")
+
+@csrf_exempt
+def ajax_checkin(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        if data and request.user.is_student:
+            checkin = CheckIn.objects.create(
+                    student=request.user,
+                    class_name=Class.objects.get(
+                        pk=int(data['class_id'])
+                    )
+                )
+            if checkin:
+                response = serializers.serialize('json', [checkin])
+                return HttpResponse(response, content_type='application/json')
+
 def helped(request, help_id):
     help_me = HelpMe.objects.get(pk=help_id)
     help_me.delete()
@@ -107,6 +131,7 @@ def checkin(request):
         if request.method == "POST":
             student_check_in_form = StudentCheckInForm(request.POST)
             if student_check_in_form.is_valid():
+                student_check_in_form.save()
                 checkin = CheckIn.objects.create(
                     student=request.user,
                     class_name=Class.objects.get(
@@ -114,7 +139,7 @@ def checkin(request):
                     )
                 )
                 if checkin:
-                    return redirect('home')
+                    return redirect('view-class')
 
     data = {'student_check_in_form': student_check_in_form}
     return render(request, 'checkin/checkin.html', data)
@@ -135,6 +160,14 @@ def ajax_checkin(request):
                 response = serializers.serialize('json', [checkin])
                 return HttpResponse(response, content_type='application/json')
 
-def klass(request):
-    return render(request, 'class.html')
 
+def view_class(request, class_id):
+    klass = Class.objects.get(id=class_id)
+    checkins = CheckIn.objects.filter(class_name=klass)
+    most_checkins = checkins.values('student').annotate(num_checkins=Count('student'))[0]
+    help_objects = HelpMe.objects.all()
+    return render(request, 'class.html', {'klass': klass,
+                                          'checkins': checkins,
+                                          'mayor': UserProfile.objects.get(pk=most_checkins['student']),
+                                          'help_objects': help_objects,
+                                        })
