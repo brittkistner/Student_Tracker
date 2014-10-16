@@ -1,0 +1,20 @@
+{#<div class="helpMe">#}
+{#    <h2>HelpMe</h2>#}
+<div class="assistList">
+    <ol>
+    {% for help_object in assist_list %}
+            <li>{{ help_object.student }}
+                {% if user.is_student == False %}
+                    <button id="{{ help_object.pk }}" class = "btn btn-primary helpedButton" type="submit" value="helped">Helped Student</button>
+            {% endif %}</li>
+
+
+    {% endfor %}
+    </ol>
+</div>
+{#{% if user.is_student %}#}
+{#        <button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button>#}
+{#    <button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button>#}
+{#{% endif %}#}
+
+{#</div>#}
