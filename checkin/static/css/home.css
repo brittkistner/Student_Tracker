@@ -2,6 +2,14 @@
     margin:3%;
 }
 
-#home-container{
-    background-color: #fbfbfb;
+#class_list{
+    background-color: white;
+}
+
+.border{
+    border-left: 1px solid darkgray;
+}
+
+#checkin{
+    margin-left: 5%;
 }

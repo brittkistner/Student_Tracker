@@ -3,25 +3,13 @@
 
 {% block content %}
 
-{#    <div class="container" id="log">#}
-{#      <div class="row">#}
-{#        <div id="login_header" class="row">#}
-{#            <div class="col-sm-12">#}
-{#            </div>#}
-{#        </div>#}
-        {% if user.is_authenticated == False %}
-        <div class="row login">
-            <div class="col-sm-4 col-sm-offset-5">
-                 <a id="modal_trigger" href="#modal" class="btn btn-default btn-lg">Login/Register</a>
-            </div>
-        </div>
-        {% endif %}
-{#      </div>#}
-{#    </div>#}
-
-
-
-
+{% if user.is_authenticated == False %}
+<div class="row login">
+    <div class="col-sm-4 col-sm-offset-5">
+         <a id="modal_trigger" href="#modal" class="btn btn-default btn-lg">Login/Register</a>
+    </div>
+</div>
+{% endif %}
 
 {###### MODAL ######}
     <div id="modal" class="popupContainer" style="display:none;">

@@ -41,11 +41,10 @@
 	        	>
 		        	<div class="hsContainer">
 			    		<div class="hsContent" data-center="bottom: 200px; opacity: 1" data-top="bottom: 1200px; opacity: 0" data-anchor-target="#slide-1 h2">
-				    		<h1>Thanks for checking in {{ user.username }}</h1>
+				    		<h1>Welcome {{ user.username }}</h1>
+                            <h2>You're checked into your {{ klass }} class</h2>
                             <h2>The class mayor is {{ mayor }}</h2>
-                            {% for checkin in checkins %}
-                                <p>{{ checkin.student }} checked in at {{ checkin.check_in_time }}<br></p>
-                            {% endfor %}
+
 			    		</div>
 		        	</div>
 	        	</div>
@@ -66,7 +65,11 @@
 			    			data-anchor-target="#slide-2"
 			    		>
                             <h2>STUDENTS IN THE CLASS TODAY</h2>
-
+                            <div>
+                            {% for checkin in checkins %}
+                                <p>{{ checkin.student }} checked in at {{ checkin.check_in_time }}<br></p>
+                            {% endfor %}
+                            </div>
 			    		</div>
 			    	</div>
 				</div>
