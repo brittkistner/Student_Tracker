@@ -61,7 +61,13 @@ def helpme(request):
     }
     return render_to_response('helpMe.html', data)
 
-
+def new_helpme(request):
+    assist_list = HelpMe.objects.all()
+    data = {
+        'user': request.user,
+        'assist_list': assist_list,
+    }
+    return render_to_response('new_helpMe.html', data)
 #########
 # CLASS #
 #########
@@ -85,14 +91,14 @@ def to_teacher(request):
     teacher = request.user
     teacher.is_student = False
     teacher.save()
-    return redirect("helpme")
+    return redirect("class")
 
 
 def to_student(request):
     student = request.user
     student.is_student = True
     student.save()
-    return redirect("helpme")
+    return redirect("class")
 
 
 # check in the students to class
@@ -135,6 +141,35 @@ def ajax_checkin(request):
                 response = serializers.serialize('json', [checkin])
                 return HttpResponse(response, content_type='application/json')
 
-def klass(request):
-    return render(request, 'class.html')
 
+def klass(request):
+    assist_list = HelpMe.objects.all()
+    data = {
+        'user': request.user,
+        'assist_list': assist_list
+    }
+    return render(request, 'class.html', data)
+
+## NEW AJAX CALLS
+
+
+def add_student(request, student_id):
+    student_in_need = UserProfile.objects.get(pk=student_id)
+    HelpMe.objects.create(student=student_in_need)
+    assist_list = HelpMe.objects.all()
+    data = {
+        'assist_list': assist_list,
+        'user': request.user
+    }
+    return render(request, 'new_helpMe.html', data)
+
+
+def remove_help(request, help_id):
+    help_object = HelpMe.objects.get(pk=help_id)
+    help_object.delete()
+    assist_list = HelpMe.objects.all()
+    data = {
+        'assist_list': assist_list,
+        'user': request.user
+    }
+    return render(request, 'new_helpMe.html', data)
