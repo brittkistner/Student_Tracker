@@ -32,6 +32,9 @@ class Class(models.Model):
     class_start = models.TimeField()
     class_end = models.TimeField()
 
+    def __unicode__(self):
+        return "{}".format(self.name)
+
 
 class CheckIn(models.Model):
     student = models.ForeignKey(UserProfile, related_name="check_ins")

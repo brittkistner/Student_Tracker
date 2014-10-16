@@ -159,14 +159,17 @@ def checkin(request):
 
 
 def view_class(request, class_id):
-    klass = Class.objects.get(id=class_id)
+    klass = Class.objects.get(pk=class_id)
     checkins = CheckIn.objects.filter(class_name=klass)
-    most_checkins = checkins.values('student').annotate(num_checkins=Count('student'))[0]
-    help_objects = HelpMe.objects.all()
+    most_checkins = None
+    if checkins:
+        find_most_checkins = checkins.values('student').annotate(num_checkins=Count('student'))[0]
+        most_checkins = UserProfile.objects.get(pk=find_most_checkins['student'])
+    assist_list = HelpMe.objects.all()
     return render(request, 'class.html', {'klass': klass,
                                           'checkins': checkins,
-                                          'mayor': UserProfile.objects.get(pk=most_checkins['student']),
-                                          'help_objects': help_objects,
+                                          'mayor': most_checkins,
+                                          'assist_list': assist_list,
                                         })
 
 
