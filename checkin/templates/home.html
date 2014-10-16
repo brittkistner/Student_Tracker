@@ -6,22 +6,26 @@
 {% block content %}
 <div class="row" style="border: 2px solid black;" id="home-container">
     <div class="col-xs-12" id="welcome_info">
-        <h2>Type of User Profile<span>  |  </span>Welcome user.first_name</h2>
+        {% if user.is_student %}
+            <h2>Student Profile<span>  |  </span>Welcome {{ user.first_name }}</h2>
+        {% else %}
+            <h2>Teacher Profile<span>  |  </span>Welcome {{ user.first_name }}</h2>
+        {% endif %}
     </div>
-{#    <p>{{ user.first_name }} {{ user.username }}</p>#}
-{#    add class list here with id=class_list.#}
     <div class="col-xs-12" id="class_list" style="border: 2px solid red; height:600px;">
+        {% for class in classes %}
         <div class="row" style="border: 2px solid green; height:200px;">
             <div class="col-xs-6" style="border: 2px solid black; height:200px;">
-                <h5>CLASS NAME</h5>
+                <h5>{{ class.name }}</h5>
             </div>
             <div class="col-xs-3" style="border: 2px solid blue; height:200px;">
-                <h5>ANOTHER CLASS FEATURE</h5>
+                <h5>{{ class.class_start }}</h5>
             </div>
             <div class="col-xs-3" style="border: 2px solid purple; height:200px;">
-{#                <a href="{% url 'klass' class.pk %}"><button id="checkin" class= "btn btn-primary" type="submit" value="helped">CHECK IN</button></a>#}
+                <a href="{% url 'klass' class.pk %}"><button id="checkin" class= "btn btn-primary" type="submit" value="helped">CHECK IN</button></a>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock content %}

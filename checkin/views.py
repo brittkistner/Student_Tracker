@@ -142,11 +142,14 @@ def ajax_checkin(request):
                 return HttpResponse(response, content_type='application/json')
 
 
-def klass(request):
-    assist_list = HelpMe.objects.all()
+def klass(request, class_id):
+    klass = Class.objects.get(pk=class_id)
+    help_objects = HelpMe.objects.all()
+
+    # assist_list = HelpMe.objects.all()
     data = {
-        'user': request.user,
-        'assist_list': assist_list
+        'help_objects': help_objects,
+        'class': klass,
     }
     return render(request, 'class.html', data)
 
