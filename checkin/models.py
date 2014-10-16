@@ -28,8 +28,8 @@ class Class(models.Model):
     name = models.CharField(max_length=50)
     teacher = models.ForeignKey(UserProfile, related_name="classes_teacher")
     student = models.ManyToManyField(UserProfile, related_name="classes_student")
-    class_start = models.DateTimeField()
-    class_end = models.DateTimeField()
+    class_start = models.TimeField()
+    class_end = models.TimeField()
 
 
 class CheckIn(models.Model):

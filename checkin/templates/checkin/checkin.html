@@ -1,0 +1,32 @@
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ student_check_in_form.as_p }}
+        <input class="btn btn-default" type="submit" value="CheckIn">
+    </form>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+{#             var checkinData = {#}
+{#                class_id: $("input[name='classes']").value#}
+{#             };#}
+            //alert($("input[name='classes']").name);
+{#            checkinData = JSON.stringify(checkinData);#}
+
+            $.ajax({
+                url: '/ajax-checkin/',
+                type: 'POST',
+                dataType: 'json',
+{#                data: checkinData,#}
+                data: JSON.stringify({'class_id': 3}),
+                success: function(response) {
+                    console.log(response)
+                },
+                error: function(response) {
+                    console.log(response)
+                }
+            });
+        });
+    </script>
+{% endblock %}
