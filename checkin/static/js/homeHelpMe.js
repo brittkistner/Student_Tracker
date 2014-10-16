@@ -29,5 +29,5 @@ $(document).ready(function() {
 ////        });
 ////    }
 loadHelp();
-setInterval(loadHelp, 5000)
+setInterval(loadHelp, 2000)
 });
