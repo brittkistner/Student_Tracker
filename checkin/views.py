@@ -1,7 +1,7 @@
 import json
 from django.contrib.auth import authenticate, login
 from django.core import serializers
-from django.db.models import Count, Max
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.decorators import login_required
@@ -19,9 +19,12 @@ def register(request):
     if request.method == 'POST':
         form = EmailUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            # user = form.save() <<=== need this line for email but Pep8 complains about user not referenced....
+            form.save()
             # text_content = 'Thank you for signing up for our website, {}'.format(user.username)
-            # html_content = '<h2>Thanks {} {} for signing up!</h2> <div>You joined at {}.  I hope you enjoy using our site</div>'.format(user.first_name, user.last_name, user.date_joined)
+            # html_content = '<h2>Thanks {} {} for signing up!</h2>
+            # <div>You joined at {}.  I hope you enjoy using our site</div>'
+            # .format(user.first_name, user.last_name, user.date_joined)
             # msg = EmailMultiAlternatives("Welcome!", text_content, settings.DEFAULT_FROM_EMAIL, [user.email])
             # msg.attach_alternative(html_content, "text/html")
             # msg.send()
@@ -62,6 +65,7 @@ def helpme(request):
     }
     return render_to_response('helpMe.html', data)
 
+
 def new_helpme(request):
     assist_list = HelpMe.objects.all()
     data = {
@@ -88,6 +92,7 @@ def ajax_add_help(request, student_id):
     HelpMe.objects.create(student=student_in_need)
     return redirect("class")
 
+
 @csrf_exempt
 def ajax_checkin(request):
     if request.method == 'POST':
@@ -102,6 +107,7 @@ def ajax_checkin(request):
             if checkin:
                 response = serializers.serialize('json', [checkin])
                 return HttpResponse(response, content_type='application/json')
+
 
 def helped(request, help_id):
     help_me = HelpMe.objects.get(pk=help_id)
@@ -131,13 +137,14 @@ def to_student(request):
 def checkin(request):
     student_check_in_form = None
     if request.user.is_student:
-    #Check if student or teacher
+        # Check if student or teacher
         student_check_in_form = StudentCheckInForm(student=request.user)
-        #Pass in student user to get classes for the particular student in form
+        # Pass in student user to get classes for the particular student in form
         if request.method == "POST":
             student_check_in_form = StudentCheckInForm(request.POST)
             if student_check_in_form.is_valid():
-                student_check_in_form.save()
+                student_check_in_form(request.user)
+                # checkin=student_check_in_form.save(request.user)
                 checkin = CheckIn.objects.create(
                     student=request.user,
                     class_name=Class.objects.get(
@@ -151,22 +158,6 @@ def checkin(request):
     return render(request, 'checkin/checkin.html', data)
 
 
-@csrf_exempt
-def ajax_checkin(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        if data and request.user.is_student:
-            checkin = CheckIn.objects.create(
-                    student=request.user,
-                    class_name=Class.objects.get(
-                        pk=int(data['class_id'])
-                    )
-                )
-            if checkin:
-                response = serializers.serialize('json', [checkin])
-                return HttpResponse(response, content_type='application/json')
-
-
 def view_class(request, class_id):
     klass = Class.objects.get(id=class_id)
     checkins = CheckIn.objects.filter(class_name=klass)
@@ -178,6 +169,7 @@ def view_class(request, class_id):
                                           'help_objects': help_objects,
                                         })
 
+
 def klass(request):
     assist_list = HelpMe.objects.all()
     data = {
@@ -186,7 +178,7 @@ def klass(request):
     }
     return render(request, 'class.html', data)
 
-## NEW AJAX CALLS
+# NEW AJAX CALLS
 
 
 def add_student(request, student_id):
@@ -209,4 +201,3 @@ def remove_help(request, help_id):
         'user': request.user
     }
     return render(request, 'new_helpMe.html', data)
-

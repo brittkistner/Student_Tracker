@@ -7,7 +7,3 @@ admin.site.register(UserProfile)
 admin.site.register(Class)
 admin.site.register(CheckIn)
 admin.site.register(HelpMe)
-
-
-
-
