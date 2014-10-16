@@ -26,6 +26,7 @@ urlpatterns = patterns('',
 
     #check in
     url(r'^checkin/$', 'checkin.views.checkin', name='checkin'),
+    url(r'^ajax-checkin/$', 'checkin.views.ajax_checkin', name='ajax_checkin'),
 )
 
 if settings.DEBUG:
