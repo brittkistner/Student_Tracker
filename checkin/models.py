@@ -7,10 +7,11 @@ class UserProfile(AbstractUser):
     # we enter first and last names in the registration, the name field is unnecessary
     is_student = models.BooleanField(default=True)
     # I think my database might be screwed up because it doesnt let me make changes to the user
-    #in the admin, working around it to avoid dropping the db
+    # in the admin, working around it to avoid dropping the db
 
     def __unicode__(self):
         return self.username
+
 
 # class Teacher(UserProfile):
 #
@@ -40,8 +41,7 @@ class CheckIn(models.Model):
     def __unicode__(self):
         return "{}".format(self.class_name.name)
 
+
 class HelpMe(models.Model):
     student = models.ForeignKey(UserProfile, related_name="help_mes")
     created_time = models.DateTimeField(auto_now_add=True)
-
-

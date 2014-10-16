@@ -1,13 +1,14 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+# from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from models import UserProfile, Class
+from models import UserProfile, Class  # , CheckIn
 
 
 class EmailUserCreationForm(UserCreationForm):
     helper = FormHelper()
-    helper.form_method="POST"
+    helper.form_method = "POST"
     helper.form_class = 'form-horizontal'
     helper.add_input(Submit('Register', 'Register', css_class='btn-default'))
 
@@ -25,6 +26,12 @@ class EmailUserCreationForm(UserCreationForm):
             self.error_messages['duplicate_username'],
             code='duplicate_username',
         )
+    #
+    # def save(self, commit=False):
+    #     user = super(EmailUserCreationForm, self).save(commit=True)
+    #     new_user = authenticate(username=user.username,
+    #                                 password=user.password)
+    #     login(request, new_user)
 
 
 class StudentCheckInForm(forms.Form):
@@ -43,5 +50,11 @@ class StudentCheckInForm(forms.Form):
             for classes in Class.objects.filter(student=student)
         ]
 
-
-
+    # def save(self, student):
+    #     checkin = CheckIn.objects.create(
+    #                 student=student,
+    #                 class_name=Class.objects.get(
+    #                     pk=int(self.cleaned_data['classes'])
+    #                 )
+    #             )
+    #     return checkin
