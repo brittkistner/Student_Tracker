@@ -12,22 +12,10 @@ $(document).ready(function() {
             }
         });
     }
-//    function delete_student () {
-//        $('.helpedButton').on('click', function(){
-//            var student = $(this).prev().attr('href');
-//            console.log(student);
-//        });
-////        $.ajax({
-////            url: 'helpMe/',
-////            type: 'GET',
-////            dataType: 'json',
-////            data: student,
-////            success: function (data) {
-////                $('.helpMe').html(data);
-////                console.log("data please")
-////            }
-////        });
-////    }
+    
+//    function scroll
+//    $("html, body").animate({ scrollTop: $('#title1').offset().top }, 1000);
 loadHelp();
 setInterval(loadHelp, 2000)
+
 });
