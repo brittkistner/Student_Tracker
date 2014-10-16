@@ -14,6 +14,7 @@
 
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'css/class.css' %}">
+        <script src= "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script src="{% static 'js/vendor/modernizr-2.7.1.min.js' %}"></script>
         <script src="{% static 'js/homeHelpMe.js' %}"></script>
         <style type="text/css">
@@ -40,7 +41,7 @@
 	        	>
 		        	<div class="hsContainer">
 			    		<div class="hsContent" data-center="bottom: 200px; opacity: 1" data-top="bottom: 1200px; opacity: 0" data-anchor-target="#slide-1 h2">
-				    		<h1>Thanks for checking in (user.name)</h1>
+				    		<h1>Thanks for checking in {{ user.username }}</h1>
                             <h2>The class mayor is (user.mayor.name)</h2>
 			    		</div>
 		        	</div>
@@ -83,7 +84,7 @@
 							data-200-top="opacity: 0"
 							data-anchor-target="#slide-3 h2"
 						>
-                            <h2>Help Me</h2>
+                            <h2 id="helpmeredirect">Help Me</h2>
                             <div class="helpMe" style="border: 2px solid green; height:200px;">
 
                             </div>

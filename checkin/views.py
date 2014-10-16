@@ -71,12 +71,12 @@ def helpme(request):
 def add_help(request, student_id):
     student_in_need = UserProfile.objects.get(pk=student_id)
     HelpMe.objects.create(student=student_in_need)
-    return redirect("helpme")
+    return redirect("class")
 
 def helped(request, help_id):
     help_me = HelpMe.objects.get(pk=help_id)
     help_me.delete()
-    return redirect("helpme")
+    return redirect("class")
 
 
 # we can work on this later, but this is just a url any user can go to that would

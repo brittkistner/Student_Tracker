@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^class/$', 'checkin.views.klass', name='class'),
     # url(r'^class2/$', 'checkin.views.klass2', name='class2'),
 
-    url(r'^home/helpMe/$', 'checkin.views.helpme', name='helpme'),
+    url(r'^class/helpMe/$', 'checkin.views.helpme', name='helpme'),
     url(r'^add_help/(?P<student_id>\w+)/$', 'checkin.views.add_help', name='add_help'),
     url(r'^helped/(?P<help_id>\w+)/$', 'checkin.views.helped', name='helped'),
     url(r'^to_teacher/$', 'checkin.views.to_teacher', name='to_teacher'),
