@@ -121,14 +121,14 @@ def to_teacher(request):
     teacher = request.user
     teacher.is_student = False
     teacher.save()
-    return redirect("class")
+    return redirect("home")
 
 
 def to_student(request):
     student = request.user
     student.is_student = True
     student.save()
-    return redirect("class")
+    return redirect("home")
 
 
 # check in the students to class

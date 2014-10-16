@@ -19,11 +19,7 @@ $(document).ready(function() {
             }
         });
     }
-//
-////    function scroll
-////    $("html, body").animate({ scrollTop: $('#title1').offset().top }, 1000);
 loadHelp();
-//setInterval(loadHelp, 2000)
 
     $(".addMeButton").on("click", function(){
        console.log('click');

@@ -88,18 +88,20 @@
 							data-anchor-target="#slide-3 h2"
 						>
                             <h2 id="helpmeredirect">Help Me</h2>
-                            {% if user.is_student %}
-                                <button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button>
-                            {% endif %}
+
+
+                            <div class="helpMe" style="border: 2px solid green; height:200px; background-color: white;">
+
                             {% for help_object in assist_list %}
                                 <li>{{ help_object.student }}
                                     {% if user.is_student == False %}
                                         <button id="{{ help_object.pk }}" class = "btn btn-primary helpedButton" type="submit" value="helped">Helped Student</button>
                                 {% endif %}</li>
                             {% endfor %}
-                            <div class="helpMe" style="border: 2px solid green; height:200px; background-color: white;">
-
                             </div>
+                            {% if user.is_student %}
+                                <button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button>
+                            {% endif %}
 
 			    		</div>
 			    	</div>
