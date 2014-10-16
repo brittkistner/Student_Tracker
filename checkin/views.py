@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.shortcuts import render_to_response
 from checkin.forms import EmailUserCreationForm, StudentCheckInForm
 from checkin.models import CheckIn, Class
-
 
 # ##############
 # REGISTRATION #
 ###############
+from checkin.models import UserProfile, HelpMe
+
 
 def register(request):
     if request.method == 'POST':
@@ -23,7 +23,7 @@ def register(request):
             new_user = authenticate(username=request.POST['username'],
                                     password=request.POST['password1'])
             login(request, new_user)
-            return redirect("login")
+            return redirect("home")
 
     else:
         form = EmailUserCreationForm()
@@ -47,6 +47,52 @@ def home(request):
         'classes': classes
     }
     return render(request, 'home.html', data)
+
+def helpme(request):
+    assist_list = HelpMe.objects.all()
+    data = {
+        'user': request.user,
+        'assist_list': assist_list,
+    }
+    return render_to_response('helpMe.html', data)
+
+
+#########
+# CLASS #
+#########
+
+# def klass(request):
+#     return render(request, 'class.html')
+#
+# def klass2(request):
+#     return render(request, 'class2.html')
+
+
+def add_help(request, student_id):
+    student_in_need = UserProfile.objects.get(pk=student_id)
+    HelpMe.objects.create(student=student_in_need)
+    return redirect("class")
+
+def helped(request, help_id):
+    help_me = HelpMe.objects.get(pk=help_id)
+    help_me.delete()
+    return redirect("class")
+
+
+# we can work on this later, but this is just a url any user can go to that would
+# change the user's is_student boolean to False (making them a teacher)
+def to_teacher(request):
+    teacher = request.user
+    teacher.is_student = False
+    teacher.save()
+    return redirect("helpme")
+
+def to_student(request):
+    student = request.user
+    student.is_student = True
+    student.save()
+    return redirect("helpme")
+
 
 
 # check in the students to class
@@ -73,15 +119,5 @@ def checkin(request):
     data = {'student_check_in_form': student_check_in_form}
     return render(request, 'checkin/checkin.html', data)
 
-# class Class(models.Model):
-#     name = models.CharField(max_length=50)
-#     teacher = models.ForeignKey(UserProfile, related_name="classes_teacher")
-#     student = models.ManyToManyField(UserProfile, related_name="classes_student")
-#     class_start = models.DateTimeField()
-#     class_end = models.DateTimeField()
-#
-#
-# class CheckIn(models.Model):
-#     student = models.ForeignKey(UserProfile, related_name="check_ins")
-#     class_name = models.ForeignKey(Class, related_name="check_ins")
-#     check_in_time = models.DateTimeField(auto_now_add=True)
+def klass(request):
+    return render(request, 'class.html')
