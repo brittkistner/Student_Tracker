@@ -37,6 +37,8 @@ class CheckIn(models.Model):
     class_name = models.ForeignKey(Class, related_name="check_ins")
     check_in_time = models.DateTimeField(auto_now_add=True)
 
+    def __unicode__(self):
+        return "{}".format(self.class_name.name)
 
 class HelpMe(models.Model):
     student = models.ForeignKey(UserProfile, related_name="help_mes")
