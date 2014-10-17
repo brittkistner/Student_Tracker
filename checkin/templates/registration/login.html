@@ -3,12 +3,6 @@
 
 {% block content %}
 
-{#    <div class="container" id="log">#}
-{#      <div class="row">#}
-{#        <div id="login_header" class="row">#}
-{#            <div class="col-sm-12">#}
-{#            </div>#}
-{#        </div>#}
         {% if user.is_authenticated == False %}
         <div class="row login">
             <div class="col-sm-4 col-sm-offset-5">
@@ -16,12 +10,6 @@
             </div>
         </div>
         {% endif %}
-{#      </div>#}
-{#    </div>#}
-
-
-
-
 
 {###### MODAL ######}
     <div id="modal" class="popupContainer" style="display:none;">

@@ -14,7 +14,6 @@
 
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'css/class.css' %}">
-        <script src= "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script src="{% static 'js/vendor/modernizr-2.7.1.min.js' %}"></script>
 
         <style type="text/css">
@@ -42,7 +41,10 @@
 		        	<div class="hsContainer">
 			    		<div class="hsContent" data-center="bottom: 200px; opacity: 1" data-top="bottom: 1200px; opacity: 0" data-anchor-target="#slide-1 h2">
 				    		<h1>Thanks for checking in {{ user.username }}</h1>
-                            <h2>The class mayor is (user.mayor.name)</h2>
+                            <h2>The class mayor is {{ mayor }}</h2>
+                            {% for checkin in checkins %}
+                                <p>{{ checkin.student }} checked in at {{ checkin.check_in_time }}<br></p>
+                            {% endfor %}
 			    		</div>
 		        	</div>
 	        	</div>
@@ -88,15 +90,18 @@
                             {% if user.is_student %}
                                 <button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button>
                             {% endif %}
+
+
+                            <div class="helpMe" style="border: 2px solid green; height:200px; background-color: white;">
+
                             {% for help_object in assist_list %}
                                 <li>{{ help_object.student }}
                                     {% if user.is_student == False %}
                                         <button id="{{ help_object.pk }}" class = "btn btn-primary helpedButton" type="submit" value="helped">Helped Student</button>
                                 {% endif %}</li>
                             {% endfor %}
-                            <div class="helpMe" style="border: 2px solid green; height:200px; background-color: white;">
-
                             </div>
+
 
 			    		</div>
 			    	</div>
@@ -128,7 +133,7 @@
 		</main>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{% static 'js/vendor/jquery-1.9.1.min.js' %}"><\/script>')</script>
+{#        <script>window.jQuery || document.write('<script src="{% static 'js/vendor/jquery-1.9.1.min.js' %}"><script>')</script>#}
         <script src="{% static 'js/imagesloaded.js' %}"></script>
         <script src="{% static 'js/skrollr.js' %}"></script>
         <script src="{% static 'js/class.js' %}"></script>

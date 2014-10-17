@@ -6,7 +6,7 @@
 {% block content %}
 <div class="row" style="border: 2px solid black;" id="home-container">
     <div class="col-xs-12" id="welcome_info">
-        <h2>Type of User Profile<span>  |  </span>Welcome user.first_name</h2>
+        <h2>Type of User Profile<span>  |  </span>Welcome {{ user.first_name }}</h2>
     </div>
 {#    <p>{{ user.first_name }} {{ user.username }}</p>#}
 {#    add class list here with id=class_list.#}
@@ -14,6 +14,11 @@
         <div class="row" style="border: 2px solid green; height:200px;">
             <div class="col-xs-6" style="border: 2px solid black; height:200px;">
                 <h5>CLASS NAME</h5>
+                <ol>
+                {% for class in classes %}
+                    <a href="{% url 'view_class' class.id %}"><li>{{ class }}</li></a>
+                {% endfor %}
+                </ol>
             </div>
             <div class="col-xs-3" style="border: 2px solid blue; height:200px;">
                 <h5>ANOTHER CLASS FEATURE</h5>

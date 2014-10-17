@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     'django.contrib.auth.views.password_reset_confirm',
     name='password_reset_confirm'),
     # CLASS #
-    url(r'^class/$', 'checkin.views.klass', name='class'),
+    url(r'^class/(?P<class_id>\d+)$', 'checkin.views.view_class', name='view_class'),
     # url(r'^class2/$', 'checkin.views.klass2', name='class2'),
 
     url(r'^class/helpMe/$', 'checkin.views.helpme', name='helpme'),
@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     #AJAX STUDENTS
     url(r'^class/new_helpMe/$', 'checkin.views.new_helpme', name='new_helpme'),
     url(r'^add_student/(?P<student_id>\w+)/$', 'checkin.views.add_student', name='add_student'),
-    url(r'^remove_help/(?P<help_id>\w+)/$', 'checkin.views.remove_help', name='remove_help'),
+    url(r'^class/remove_help/(?P<help_id>\w+)/$', 'checkin.views.remove_help', name='remove_help'),
 
     url(r'^admin/', include(admin.site.urls)),
 
