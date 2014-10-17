@@ -4,4 +4,5 @@ django-crispy-forms==1.4.0
 pep8==1.5.7
 psycopg2==2.5.4
 pyflakes==0.8.1
+selenium==2.43.0
 wsgiref==0.1.2
