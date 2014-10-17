@@ -14,8 +14,28 @@
     </div>
     {% if user.is_student %}
     <div class="addMe">
-        <a href="{% url 'add_help' user.pk %}"><button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button></a>
+{#        <a href="{% url 'add_help' user.pk %}"></a>#}
+        <button id="{{ user.pk }}" class= "btn btn-primary addMeButton" type="submit" value="addHelp">Add Me</button>
     </div>
     {% endif %}
+
+<script>
+
+    $('.addMeButton').on('click', function(){
+        $.ajax({
+           url: '/add_help/'+$(this).attr('id'),
+           type: 'GET',
+           success: function(response){
+               //do something here to manipulate DOM
+                console.log("success");
+            },
+           error: function(response){
+                console.log("error");
+            }
+        });
+    });
+
+
+</script>
 
 {#</div>#}
