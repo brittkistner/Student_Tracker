@@ -45,7 +45,7 @@ def register(request):
 # HOME #
 ########
 
-@login_required()
+# @login_required()
 def home(request):
     if not request.user.is_student:
         classes = Class.objects.filter(teacher=request.user)

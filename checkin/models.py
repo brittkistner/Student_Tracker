@@ -13,18 +13,6 @@ class UserProfile(AbstractUser):
         return self.username
 
 
-# class Teacher(UserProfile):
-#
-#     def __unicode__(self):
-#         return u"teacher {}".format(self.first_name)
-#
-#
-# class Student(UserProfile):
-#
-#     def __unicode__(self):
-#         return u"student {}".format(self.first_name)
-
-
 class Class(models.Model):
     name = models.CharField(max_length=50)
     teacher = models.ForeignKey(UserProfile, related_name="classes_teacher")

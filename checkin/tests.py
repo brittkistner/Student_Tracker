@@ -64,17 +64,38 @@ class FormTestCase(TestCase):
         # use a context manager to watch for the validation error being raised
         self.assertFieldOutput(EmailField, {'a@a.com': 'a@a.com'}, {'aaa': [u'Enter a valid email address.']})
 
-#
-# class ViewTestCase(TestCase):
-#     def test_home_page(self):
-#         response = self.client.get(reverse('home'))
-#         self.assertIn('<p>Suit: spade, Rank: two</p>', response.content)
-#         self.assertEqual(response.context['cards'].count(), 52)
-#
-#     def test_faq_page(self):
-#         response = self.client.get(reverse('faq'))
-#         self.assertIn('<p>Q: Can I win real money on this website?</p>\n    <p>A: Nope, this is not real, sorry.</p>',
-#                       response.content)
+
+class SyntaxTest(TestCase):
+    def test_syntax(self):
+        """
+        Run pyflakes/pep8 across the code base to check for potential errors.
+        """
+        packages = ['checkin']
+        warnings = []
+        # Eventually should use flake8 instead so we can ignore specific lines via a comment
+        for package in packages:
+            warnings.extend(run_pyflakes_for_package(package, extra_ignore=("_settings",)))
+            warnings.extend(run_pep8_for_package(package, extra_ignore=("_settings",)))
+        if warnings:
+            self.fail("{0} Syntax warnings!\n\n{1}".format(len(warnings), "\n".join(warnings)))
+
+    def authentication_test(self):
+        response = self.client.get(reverse('login'))
+        print response
+        self.assertIn('<p>Q: Can I win real money on the website?</p><p>A: Nope, this is not real, sorry.</p>',
+                      response.content)
+
+
+class ViewTestCase(TestCase):
+    def test_home_page(self):
+        UserProfile.objects.create_user(username='test-user', email='test@test.com',
+                                        first_name='first_name', last_name='last_name',
+                                        password='password', is_student=True)
+        self.client.login(username='test-user', password='password')
+        response = self.client.get(reverse('home'))
+        self.assertIn('</span>Welcome first_name</h2>', response.content)
+
+
 #
 #     def test_register_page(self):
 #         username = 'new-user'
@@ -121,17 +142,3 @@ class FormTestCase(TestCase):
 #         response = self.client.get(reverse('profile'))
 #         self.assertInHTML('<p>Your email address is {}</p>'.format(user.email), response.content)
 #         self.assertEqual(len(response.context['games']), 2)
-
-class SyntaxTest(TestCase):
-    def test_syntax(self):
-        """
-        Run pyflakes/pep8 across the code base to check for potential errors.
-        """
-        packages = ['checkin']
-        warnings = []
-        # Eventually should use flake8 instead so we can ignore specific lines via a comment
-        for package in packages:
-            warnings.extend(run_pyflakes_for_package(package, extra_ignore=("_settings",)))
-            warnings.extend(run_pep8_for_package(package, extra_ignore=("_settings",)))
-        if warnings:
-            self.fail("{0} Syntax warnings!\n\n{1}".format(len(warnings), "\n".join(warnings)))
