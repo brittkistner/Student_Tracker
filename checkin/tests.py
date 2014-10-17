@@ -79,12 +79,6 @@ class SyntaxTest(TestCase):
         if warnings:
             self.fail("{0} Syntax warnings!\n\n{1}".format(len(warnings), "\n".join(warnings)))
 
-    def authentication_test(self):
-        response = self.client.get(reverse('login'))
-        print response
-        self.assertIn('<p>Q: Can I win real money on the website?</p><p>A: Nope, this is not real, sorry.</p>',
-                      response.content)
-
 
 class ViewTestCase(TestCase):
     def test_home_page(self):
@@ -95,6 +89,11 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('home'))
         self.assertIn('</span>Welcome first_name</h2>', response.content)
 
+    def authentication_test(self):
+        response = self.client.get(reverse('login'))
+        print response
+        self.assertIn('<p>Q: Can I win real money on the website?</p><p>A: Nope, this is not real, sorry.</p>',
+                      response.content)
 
 #
 #     def test_register_page(self):
