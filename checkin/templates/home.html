@@ -16,7 +16,7 @@
                 <h5>CLASS NAME</h5>
                 <ol>
                 {% for class in classes %}
-                    <a href="{% url 'view_class' class.id %}"><li>{{ class }}</li></a>
+                    <a class='view-class' href="{% url 'view_class' class.id %}"><li>{{ class }}</li></a>
                 {% endfor %}
                 </ol>
             </div>
