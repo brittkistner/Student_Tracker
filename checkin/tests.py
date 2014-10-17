@@ -1,10 +1,14 @@
 import datetime
+from time import sleep
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.core.urlresolvers import reverse
+from django.test import TestCase, LiveServerTestCase
 # from cards.forms import EmailUserCreationForm
 # from cards.models import Card, Player, WarGame
 # from cards.test_utils import run_pyflakes_for_package, run_pep8_for_package
 # from cards.utils import create_deck
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.webdriver import WebDriver
 from checkin.forms import EmailUserCreationForm
 from checkin.models import UserProfile, Class, CheckIn
 from checkin.test_utils import run_pyflakes_for_package, run_pep8_for_package
@@ -76,6 +80,78 @@ class FormTestCase(TestCase):
 #         form.cleaned_data = {'username': 'test-user2'}
 #
 #         self.assertEqual(form.clean_username(), 'test-user2')
+
+
+class SeleniumTests(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.selenium = WebDriver()
+        super(SeleniumTests, cls).setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(SeleniumTests, cls).tearDownClass()
+
+    def test_login(self):
+        UserProfile.objects.create_user('user', 'superuser@test.com', 'pass')
+        UserProfile.is_student = True
+        # let's open the admin login page
+        self.selenium.get("{}{}".format(self.live_server_url, reverse('home')))
+
+        homepage_body = self.selenium.find_element_by_tag_name('body')
+        self.assertIn('Login/Register', homepage_body.text)
+
+        self.selenium.find_element_by_id('modal_trigger').send_keys(Keys.RETURN)
+        self.selenium.find_element_by_name('username').send_keys('user')
+        password_input = self.selenium.find_element_by_name('password')
+        password_input.send_keys('pass')
+
+        password_input.send_keys(Keys.RETURN)
+        sleep(1)
+
+        logged_in_body = self.selenium.find_element_by_tag_name('body')
+        self.assertIn('Type of User Profile', logged_in_body.text)
+
+    def test_checkin(self):
+        pass
+
+    def test_student_add_help(self):
+        user = UserProfile.objects.create_user('student', 'superuser@test.com', 'pass')
+        teacher = UserProfile.objects.create_user('teacher', 'superuser@test.com', 'teacher')
+        UserProfile.is_student = True
+        klass = Class.objects.create(
+            name='class1',
+            teacher=teacher,
+            # student=self.student,
+            class_start=datetime.datetime.now(),
+            class_end=datetime.datetime.now(),
+        )
+        klass.student.add(user)
+        # let's open the admin login page
+        self.selenium.get("{}{}".format(self.live_server_url, reverse('home')))
+
+        # sign in to the app
+        self.selenium.find_element_by_id('modal_trigger').send_keys(Keys.RETURN)
+        self.selenium.find_element_by_name('username').send_keys('student')
+        password_input = self.selenium.find_element_by_name('password')
+        password_input.send_keys('pass')
+        password_input.send_keys(Keys.RETURN)
+        sleep(1)
+
+        # click on the class on front page
+        self.selenium.find_element_by_link_text('class1').click()
+        sleep(5)
+
+        # click on the add to queue
+        self.selenium.find_element_by_id('1').click()
+        sleep(5)
+
+        assit_list = self.selenium.find_element_by_class_name('assistList')
+        self.assertIn('student', assit_list.text)
+
+    def test_teacher_helped(self):
+        pass
 
 
 class SyntaxTest(TestCase):
