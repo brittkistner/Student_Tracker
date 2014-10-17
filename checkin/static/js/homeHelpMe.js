@@ -21,6 +21,7 @@ $(document).ready(function() {
     }
 
     loadHelp();
+    setInterval(loadHelp, 2000)
 
     $(".addMeButton").on("click", function () {
         console.log('click');
