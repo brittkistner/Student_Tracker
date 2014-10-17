@@ -89,7 +89,7 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('home'))
         self.assertIn('</span>Welcome first_name</h2>', response.content)
 
-    def authentication_test(self):
+    def test_authentication(self):
         response = self.client.get(reverse('login'))
         print response
         self.assertIn('<p>Q: Can I win real money on the website?</p><p>A: Nope, this is not real, sorry.</p>',
